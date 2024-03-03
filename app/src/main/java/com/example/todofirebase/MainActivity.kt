@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), OnAuthLaunch, onAddTaskFragmentListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        showListFragment()
+        //showListFragment()
     }
     override fun launch(intent: Intent) {
         startActivityForResult(intent, 1)
