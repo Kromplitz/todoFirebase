@@ -14,10 +14,11 @@ import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.ktx.Firebase
 
-class MainActivity : AppCompatActivity(), OnAuthLaunch {
+class MainActivity : AppCompatActivity(), OnAuthLaunch, onAddTaskFragmentListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        showListFragment()
     }
     override fun launch(intent: Intent) {
         startActivityForResult(intent, 1)
@@ -26,7 +27,6 @@ class MainActivity : AppCompatActivity(), OnAuthLaunch {
         supportFragmentManager.beginTransaction()
             .add(R.id.container, ListFragment())
             .commit()
-
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -43,18 +43,25 @@ class MainActivity : AppCompatActivity(), OnAuthLaunch {
                         } else {
                             Toast.makeText(this, "Autentification failed",Toast.LENGTH_SHORT).show()
                         }
-
                     }
-
                 showListFragment()
             } catch (e:ApiException) {
                 Toast.makeText(this, "Error $e", Toast.LENGTH_SHORT).show()
             }
         }
     }
+    override fun onClick() {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.container, AddTaskFragment())
+            .addToBackStack("add_task_fragment")
+            .commit()
+    }
 }
-
 interface OnAuthLaunch {
     fun launch(intent: Intent)
     fun showListFragment()
 }
+interface onAddTaskFragmentListener{
+  fun onClick()
+}
+
